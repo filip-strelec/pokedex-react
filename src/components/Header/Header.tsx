@@ -19,6 +19,20 @@ export default function Header({ onShowFavorites, onShowTeam, onShowCompare }: H
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
+  // Count active filters
+  const activeFilterCount = (() => {
+    let count = 0;
+    const { filters } = state;
+    if (filters.name) count++;
+    if (filters.types && filters.types.length > 0) count += filters.types.length;
+    if (filters.generation) count++;
+    if (filters.abilities && filters.abilities.length > 0) count += filters.abilities.length;
+    if (filters.statRanges && Object.keys(filters.statRanges).length > 0) {
+      count += Object.keys(filters.statRanges).length;
+    }
+    return count;
+  })();
+
   const handleBackup = () => {
     exportBackup(state.favorites, state.team);
     closeMobileMenu();
@@ -70,6 +84,7 @@ export default function Header({ onShowFavorites, onShowTeam, onShowCompare }: H
             $active={state.showFilters}
           >
             <FiFilter size={16} /> Filters
+            {activeFilterCount > 0 && <S.FilterBadge>{activeFilterCount}</S.FilterBadge>}
           </Button>
           <Button onClick={() => {
             onShowFavorites();

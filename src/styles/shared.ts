@@ -85,6 +85,11 @@ export const Button = styled.button<{ $variant?: string; $active?: boolean }>`
       background: ${theme.colors.secondary};
       color: #fff;
       border-color: ${theme.colors.secondary};
+
+      &:hover {
+        background: ${theme.colors.secondary};
+        filter: brightness(1.1);
+      }
     `}
 
   &:disabled {

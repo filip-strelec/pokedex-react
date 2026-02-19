@@ -104,3 +104,17 @@ export const Badge = styled.span`
   margin-left: -2px;
 `;
 
+export const FilterBadge = styled.span`
+  background: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: ${({ theme }) => theme.radii.full};
+  padding: 0 5px;
+`;
+

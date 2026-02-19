@@ -5,6 +5,7 @@ import { fetchPokemonSpecies } from '../../api/pokeApi';
 import { capitalize, formatStatName } from '../../utils/pokemon';
 import { TypeBadge, Button } from '../../styles/shared';
 import { ActionType } from '../../types';
+import statRanges from '../../data/statRanges.json';
 import * as S from './PokemonModal.styles';
 
 export default function PokemonModal() {
@@ -85,7 +86,7 @@ export default function PokemonModal() {
               <S.StatLabel>{formatStatName(name)}</S.StatLabel>
               <S.StatValue>{value}</S.StatValue>
               <S.StatBar>
-                <S.StatFill $pct={(value / 255) * 100} />
+                <S.StatFill $pct={(value / (statRanges[name as keyof typeof statRanges]?.max || 255)) * 100} />
               </S.StatBar>
             </S.StatRow>
           ))}

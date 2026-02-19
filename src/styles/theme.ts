@@ -1,7 +1,7 @@
 import type { DefaultTheme } from 'styled-components';
 
 export const theme: DefaultTheme = {
-  colors: {
+  colors: { //TODO: some of them are unused
     bg: '#f0f4f8',
     surface: '#ffffff',
     surfaceHover: '#f7fafc',

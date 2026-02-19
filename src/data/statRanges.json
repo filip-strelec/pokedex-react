@@ -1,0 +1,26 @@
+{
+  "hp": {
+    "min": 1,
+    "max": 255
+  },
+  "attack": {
+    "min": 5,
+    "max": 181
+  },
+  "defense": {
+    "min": 5,
+    "max": 230
+  },
+  "special-attack": {
+    "min": 10,
+    "max": 173
+  },
+  "special-defense": {
+    "min": 20,
+    "max": 230
+  },
+  "speed": {
+    "min": 5,
+    "max": 200
+  }
+}

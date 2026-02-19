@@ -70,12 +70,14 @@ export const TypeGrid = styled.div`
 export const TypeBtn = styled(TypeBadge).attrs({ as: 'button' })<{ $active?: boolean }>`
   cursor: pointer;
   opacity: ${({ $active }) => ($active ? 1 : 0.4)};
-  transition: opacity ${({ theme }) => theme.transitions.fast};
+  transition: all ${({ theme }) => theme.transitions.fast};
   border: none;
   font-size: 0.65rem;
 
   &:hover {
-    opacity: ${({ $active }) => ($active ? 0.8 : 0.7)};
+    opacity: ${({ $active }) => ($active ? 1 : 0.7)};
+    filter: ${({ $active }) => ($active ? 'brightness(1.15)' : 'none')};
+    transform: translateY(-1px);
   }
 `;
 
