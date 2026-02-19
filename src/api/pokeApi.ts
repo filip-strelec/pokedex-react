@@ -2,6 +2,7 @@ import { API_BASE } from '../constants';
 import type { Pokemon } from '../types';
 
 const cache = new Map<string, unknown>();
+let preloadStarted = false;
 
 async function fetchWithCache<T>(url: string): Promise<T> {
   if (cache.has(url)) return cache.get(url) as T;
@@ -11,6 +12,56 @@ async function fetchWithCache<T>(url: string): Promise<T> {
   const data = await response.json();
   cache.set(url, data);
   return data as T;
+}
+
+// Preload all Pokemon data in the background
+async function preloadAllPokemon() {
+  if (preloadStarted) return;
+  preloadStarted = true;
+
+  try {
+    console.log('[Cache] Starting background preload of all 1025 Pokémon...');
+    const startTime = Date.now();
+
+    // Fetch in batches to avoid overwhelming the API
+    const BATCH_SIZE = 100;
+    const TOTAL_POKEMON = 1025;
+
+    for (let i = 1; i <= TOTAL_POKEMON; i += BATCH_SIZE) {
+      const batchIds = Array.from(
+        { length: Math.min(BATCH_SIZE, TOTAL_POKEMON - i + 1) },
+        (_, idx) => i + idx
+      );
+
+      // Fetch batch in parallel
+      await Promise.all(
+        batchIds.map((id) =>
+          fetchPokemonDetail(id).catch(() => {
+            // Silently ignore errors during preload
+          })
+        )
+      );
+
+      // Small delay between batches to be nice to the API
+      if (i + BATCH_SIZE <= TOTAL_POKEMON) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+      }
+    }
+
+    const duration = ((Date.now() - startTime) / 1000).toFixed(1);
+    console.log(`[Cache] ✅ Preloaded all Pokémon in ${duration}s`);
+  } catch (error) {
+    console.error('[Cache] Preload failed:', error);
+  }
+}
+
+// Hacky way to start preloading as soon as the page is loaded in the background
+if (typeof window !== 'undefined') {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(() => preloadAllPokemon(), { timeout: 2000 });
+  } else {
+    setTimeout(() => preloadAllPokemon(), 100);
+  }
 }
 
 interface PokemonListResponse {
