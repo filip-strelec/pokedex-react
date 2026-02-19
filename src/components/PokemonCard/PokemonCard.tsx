@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { FiHeart, FiPlus, FiCheck, FiShuffle } from 'react-icons/fi';
+import { GiPokecog } from 'react-icons/gi';
 import { TypeBadge } from '../../styles/shared';
 import { usePokemon } from '../../context/PokemonContext';
 import { capitalize } from '../../utils/pokemon';
@@ -48,6 +49,17 @@ function PokemonCard({ pokemon }: PokemonCardProps) {
             onClick={() => dispatch({ type: ActionType.TOGGLE_COMPARE, payload: pokemon.id })}
           >
             <FiShuffle size={13} />
+          </S.IconBtn>
+          <S.IconBtn
+            as="a"
+            href={`https://pokedex-terminal.ssolutions.hr/?pokemon=${pokemon.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            $active={true}
+            $hoverColor="#ee1515"
+            title="Catch this Pokémon!"
+          >
+            <GiPokecog size={14} />
           </S.IconBtn>
         </S.ActionButtons>
         {imgError ? (

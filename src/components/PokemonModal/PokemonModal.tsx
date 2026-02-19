@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { FiX, FiHeart, FiPlus, FiCheck, FiShare2, FiShuffle } from 'react-icons/fi';
+import { GiPokecog } from 'react-icons/gi';
 import { usePokemon } from '../../context/PokemonContext';
 import { fetchPokemonSpecies } from '../../api/pokeApi';
 import { capitalize, formatStatName } from '../../utils/pokemon';
@@ -130,6 +131,16 @@ export default function PokemonModal() {
               title="Copy shareable link"
             >
               <FiShare2 size={14} /> Share
+            </Button>
+            <Button
+              as="a"
+              href={`https://pokedex-terminal.ssolutions.hr/?pokemon=${pokemon.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              $variant="primary"
+              title="Catch this Pokémon in the terminal!"
+            >
+              <GiPokecog size={16} /> Catch it!
             </Button>
           </S.ActionRow>
         </S.Body>
